@@ -15,10 +15,19 @@ exports.getBookById = async (req, res) => {
 
 // Upload a new book
 exports.uploadBook = async (req, res) => {
-  const { title, author, description, genres, coverUrl } = req.body;
-  const book = new Book({ title, author, description, genres, coverUrl });
-  await book.save();
-  res.status(201).json(book);
+  try {
+    const { title, author, description, genres } = req.body;
+    let coverUrl = req.body.coverUrl;
+    if (req.file) {
+      // Serve uploaded files from /uploads
+      coverUrl = `/uploads/${req.file.filename}`;
+    }
+    const book = new Book({ title, author, description, genres, coverUrl });
+    await book.save();
+    res.status(201).json(book);
+  } catch (error) {
+    res.status(500).json({ message: 'Upload failed', error: error.message });
+  }
 };
 
 // Get most viewed books

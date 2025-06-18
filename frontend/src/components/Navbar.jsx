@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navbar.css';
+//import './Navbar.css';
 
 export default function Navbar() {
   return (
@@ -14,7 +14,7 @@ export default function Navbar() {
           <a className="navbar-item">Genres</a>
           <a className="navbar-item">Newest</a>
           <a className="navbar-item">Updated</a>
-          <a className="navbar-item">Upload</a>
+          <a className="navbar-item" href="/upload-test">Upload Test</a>
           <a className="navbar-item">Random</a>
         </div>
         <div className="navbar-end">

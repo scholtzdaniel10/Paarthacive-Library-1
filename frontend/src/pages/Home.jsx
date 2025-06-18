@@ -1,55 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Carousel from '../components/Carousel';
 import BookGrid from '../components/BookGrid';
 import SectionHeader from '../components/SectionHeader';
 
-const featured = [
-  {
-    title: 'The Great Gatsby',
-    status: 'Completed',
-    cover: '/covers/gatsby.jpg',
-    description: 'A classic novel by F. Scott Fitzgerald set in the Roaring Twenties.',
-    chapter: '9 Chapters',
-    genres: ['Classic', 'Drama'],
-  },
-  {
-    title: 'To Kill a Mockingbird',
-    status: 'Completed',
-    cover: '/covers/mockingbird.jpg',
-    description: 'Harper Lee’s timeless story of justice and race in the Deep South.',
-    chapter: '31 Chapters',
-    genres: ['Classic', 'Historical'],
-  },
-  {
-    title: '1984',
-    status: 'Completed',
-    cover: '/covers/1984.jpg',
-    description: 'George Orwell’s dystopian masterpiece about totalitarianism.',
-    chapter: '24 Chapters',
-    genres: ['Dystopian', 'Science Fiction'],
-  },
-];
-
-const mostViewed = [
-  { title: 'Pride and Prejudice', cover: '/covers/pride.jpg' },
-  { title: 'Moby Dick', cover: '/covers/mobydick.jpg' },
-  { title: 'Jane Eyre', cover: '/covers/janeeyre.jpg' },
-  { title: 'War and Peace', cover: '/covers/warpeace.jpg' },
-  { title: 'The Hobbit', cover: '/covers/hobbit.jpg' },
-  { title: 'Frankenstein', cover: '/covers/frankenstein.jpg' },
-  { title: 'Dracula', cover: '/covers/dracula.jpg' },
-];
-
 export default function Home() {
+  const [featured, setFeatured] = useState([]);
+  const [mostViewed, setMostViewed] = useState([]);
   const [viewFilter, setViewFilter] = useState('Day');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch all books for featured
+    fetch('http://localhost:5000/api/books')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Books:', data); // <-- Add this
+        setFeatured(data.slice(0, 3)); // First 3 as featured
+        setLoading(false);
+      });
+
+    // Fetch most viewed books
+    fetch('http://localhost:5000/api/books/most-viewed')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Most Viewed:', data); // <-- Add this
+        setMostViewed(data);
+      });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#232323',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Navbar />
-      <div className="container mt-5">
+      <div
+        style={{
+          marginTop: 60,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+        }}
+      >
         <Carousel items={featured} />
-        <SectionHeader title="Most Viewed Books">
+        {/* FLEX ROW FOR HEADER AND FILTER BUTTONS */}
+        <div
+          style={{
+            width: '100vw', // full viewport width
+            maxWidth: '100%', // prevent overflow
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 32px', // or '0 2rem'
+            marginBottom: 24,
+            boxSizing: 'border-box',
+          }}
+        >
+          <h2
+            style={{
+              margin: 0,
+              fontWeight: 700,
+              fontSize: '1.5rem',
+              color: '#fff',
+            }}
+          >
+            Most Viewed Books
+          </h2>
           <div className="buttons has-addons">
             {['Day', 'Week', 'Month'].map((filter) => (
               <button
@@ -63,7 +87,7 @@ export default function Home() {
               </button>
             ))}
           </div>
-        </SectionHeader>
+        </div>
         <BookGrid books={mostViewed} />
       </div>
     </div>

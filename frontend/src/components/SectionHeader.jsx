@@ -1,13 +1,19 @@
 import React from 'react';
-import './SectionHeader.css';
 
-export default function SectionHeader({ title, children }) {
+export default function SectionHeader({ title, children, style }) {
   return (
-    <div className="level mb-3">
-      <div className="level-left">
-        <h2 className="title is-4">{title}</h2>
-      </div>
-      <div className="level-right">{children}</div>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: 24,
+        ...style,
+      }}
+    >
+      <h2 style={{ margin: 0 }}>{title}</h2>
+      {children}
     </div>
   );
 }

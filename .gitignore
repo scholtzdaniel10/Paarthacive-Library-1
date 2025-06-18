@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Ignore node_modules in the backend folder
+backend/node_modules
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -23,5 +26,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
-node_modules/
+node_modules
 seedbooks.js
+backend/node_modules
+frontend/node_modules

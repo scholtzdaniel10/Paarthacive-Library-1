@@ -8,7 +8,7 @@ export default function BookGrid({ books }) {
           <div className="card">
             <div className="card-image">
               <figure className="image is-3by4">
-                <img src={book.coverUrl} alt={book.title} style={{ objectFit: 'cover' }} />
+                <img src={`http://localhost:5000${book.coverUrl}`} alt={book.title} style={{ objectFit: 'cover' }} />
               </figure>
             </div>
             <div className="card-content">

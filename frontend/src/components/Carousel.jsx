@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 export default function Carousel({ items }) {
   const [current, setCurrent] = useState(0);
 
+  console.log('Carousel items:', items);
+
   if (!items.length) return null;
 
   const prev = () => setCurrent((current - 1 + items.length) % items.length);
@@ -19,7 +21,7 @@ export default function Carousel({ items }) {
           </div>
           <div className="column has-text-centered">
             <figure className="image is-3by2" style={{ maxWidth: 300, margin: '0 auto' }}>
-              <img src={book.coverUrl} alt={book.title} style={{ objectFit: 'cover', borderRadius: '8px' }} />
+              <img src={`http://localhost:5000${book.coverUrl}`} alt={book.title} style={{ objectFit: 'cover', borderRadius: '8px' }} />
             </figure>
             <div className="mt-3">
               {/* You can add more fields if you want */}

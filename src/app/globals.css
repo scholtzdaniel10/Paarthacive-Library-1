@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* Paper & ink. Light is warm paper; dark is a lamp-lit study. */
+:root {
+  --paper: #f6f1e8;
+  --card: #fffcf6;
+  --ink: #1d1a16;
+  --muted: #6d6356;
+  --line: #e3d9c8;
+  --accent: #a8461f;
+  --accent-ink: #fffaf2;
+  --ring: #a8461f55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #14110e;
+    --card: #1c1814;
+    --ink: #f0e9dd;
+    --muted: #a79c8c;
+    --line: #2f2822;
+    --accent: #e08a5c;
+    --accent-ink: #1a0f08;
+    --ring: #e08a5c55;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--ring);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@utility field {
+  @apply w-full rounded-lg border border-line bg-card px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70 transition-colors outline-none focus:border-accent focus:ring-4 focus:ring-[var(--ring)];
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-[transform,background-color,opacity] duration-150 active:scale-[0.97] disabled:opacity-60 disabled:pointer-events-none;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-accent-ink hover:opacity-90;
+}
+@utility btn-ghost {
+  @apply btn border border-line text-ink hover:bg-card;
+}
+@utility chip {
+  @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs font-medium text-muted transition-colors hover:border-accent hover:text-accent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
